@@ -1,7 +1,10 @@
 package com.se.sealarm_be.fcm.service;
 
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.messaging.*;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingException;
+import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.MessagingErrorCode;
 import com.se.sealarm_be.fcm.domain.FcmToken;
 import com.se.sealarm_be.fcm.repository.FcmTokenRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,19 +40,13 @@ public class FcmService {
 
         fcmTokenRepository.findByAccountId(accountId).ifPresent(fcmToken -> {
             try {
+                // data-only 메시지: Firebase SDK 자동 알림 방지, onBackgroundMessage에서 직접 표시
                 Message message = Message.builder()
                     .setToken(fcmToken.getToken())
-                    .setNotification(Notification.builder()
-                        .setTitle(title)
-                        .setBody(body)
-                        .build())
+                    .putData("title", title)
+                    .putData("body", body)
                     .putData("relatedId", relatedId != null ? String.valueOf(relatedId) : "")
                     .putData("url", relatedId != null ? "/posts/" + relatedId : "/")
-                    .setWebpushConfig(WebpushConfig.builder()
-                        .setNotification(WebpushNotification.builder()
-                            .setIcon("/logo192.png")
-                            .build())
-                        .build())
                     .build();
 
                 FirebaseMessaging.getInstance().send(message);
