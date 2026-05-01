@@ -3,8 +3,6 @@ spring:
     active: local
 server:
   port: 8082
-  servlet:
-    context-path: /alarm
 
 sse:
   timeout: 0
