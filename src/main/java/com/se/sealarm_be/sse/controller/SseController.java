@@ -20,7 +20,7 @@ public class SseController {
 
     @GetMapping(value = "/connect", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public ResponseEntity<?> connect(@AuthenticationPrincipal Jwt jwt) {
-        Long accountId = jwt.getClaim("accountId");
+        Number _rawId = jwt.getClaim("accountId"); Long accountId = _rawId != null ? _rawId.longValue() : null;
         if (accountId == null) {
             return ResponseEntity.status(401).body("토큰을 재발급 받아주세요. 다시 로그인해주세요.");
         }

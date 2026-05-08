@@ -6,5 +6,9 @@ public enum NotificationType {
     POST_LIKE,
     NEW_POST,
     ANNOUNCEMENT,
-    FRAME_ACQUIRED
+    FRAME_ACQUIRED,
+    RECRUIT_SKILL_MATCH,
+    SEEK_SKILL_MATCH,
+    NEW_RECRUIT_POST,
+    NEW_SEEK_POST
 }

@@ -20,7 +20,7 @@ public class FcmController {
     public ResponseEntity<Void> registerToken(
             @RequestBody Map<String, String> body,
             @AuthenticationPrincipal Jwt jwt) {
-        Long accountId = jwt.getClaim("accountId");
+        Number _rawId = jwt.getClaim("accountId"); Long accountId = _rawId != null ? _rawId.longValue() : null;
         if (accountId == null) return ResponseEntity.status(401).build();
         fcmService.registerToken(accountId, body.get("token"));
         return ResponseEntity.ok().build();
@@ -28,7 +28,7 @@ public class FcmController {
 
     @DeleteMapping("/token")
     public ResponseEntity<Void> deleteToken(@AuthenticationPrincipal Jwt jwt) {
-        Long accountId = jwt.getClaim("accountId");
+        Number _rawId = jwt.getClaim("accountId"); Long accountId = _rawId != null ? _rawId.longValue() : null;
         if (accountId == null) return ResponseEntity.status(401).build();
         fcmService.deleteToken(accountId);
         return ResponseEntity.noContent().build();

@@ -26,13 +26,13 @@ public class NotificationController {
     public ResponseEntity<Page<NotificationResponse>> getNotifications(
             @AuthenticationPrincipal Jwt jwt,
             @PageableDefault(size = 20) Pageable pageable) {
-        Long accountId = jwt.getClaim("accountId");
+        Number _rawId = jwt.getClaim("accountId"); Long accountId = _rawId != null ? _rawId.longValue() : null;
         return ResponseEntity.ok(notificationService.getNotifications(accountId, pageable));
     }
 
     @GetMapping("/unread-count")
     public ResponseEntity<Map<String, Long>> getUnreadCount(@AuthenticationPrincipal Jwt jwt) {
-        Long accountId = jwt.getClaim("accountId");
+        Number _rawId = jwt.getClaim("accountId"); Long accountId = _rawId != null ? _rawId.longValue() : null;
         return ResponseEntity.ok(Map.of("count", notificationService.getUnreadCount(accountId)));
     }
 
@@ -40,14 +40,14 @@ public class NotificationController {
     public ResponseEntity<Void> markAsRead(
             @PathVariable Long id,
             @AuthenticationPrincipal Jwt jwt) {
-        Long accountId = jwt.getClaim("accountId");
+        Number _rawId = jwt.getClaim("accountId"); Long accountId = _rawId != null ? _rawId.longValue() : null;
         notificationService.markAsRead(id, accountId);
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/read-all")
     public ResponseEntity<Void> markAllAsRead(@AuthenticationPrincipal Jwt jwt) {
-        Long accountId = jwt.getClaim("accountId");
+        Number _rawId = jwt.getClaim("accountId"); Long accountId = _rawId != null ? _rawId.longValue() : null;
         notificationService.markAllAsRead(accountId);
         return ResponseEntity.noContent().build();
     }
@@ -56,14 +56,14 @@ public class NotificationController {
     public ResponseEntity<Void> deleteOne(
             @PathVariable Long id,
             @AuthenticationPrincipal Jwt jwt) {
-        Long accountId = jwt.getClaim("accountId");
+        Number _rawId = jwt.getClaim("accountId"); Long accountId = _rawId != null ? _rawId.longValue() : null;
         notificationService.deleteOne(id, accountId);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping
     public ResponseEntity<Void> deleteAll(@AuthenticationPrincipal Jwt jwt) {
-        Long accountId = jwt.getClaim("accountId");
+        Number _rawId = jwt.getClaim("accountId"); Long accountId = _rawId != null ? _rawId.longValue() : null;
         notificationService.deleteAll(accountId);
         return ResponseEntity.noContent().build();
     }

@@ -21,7 +21,7 @@ public class SettingController {
 
     @GetMapping
     public ResponseEntity<Map<NotificationType, Boolean>> getSettings(@AuthenticationPrincipal Jwt jwt) {
-        Long accountId = jwt.getClaim("accountId");
+        Number _rawId = jwt.getClaim("accountId"); Long accountId = _rawId != null ? _rawId.longValue() : null;
         return ResponseEntity.ok(settingService.getSettings(accountId));
     }
 
@@ -30,7 +30,7 @@ public class SettingController {
             @PathVariable NotificationType type,
             @RequestParam boolean enabled,
             @AuthenticationPrincipal Jwt jwt) {
-        Long accountId = jwt.getClaim("accountId");
+        Number _rawId = jwt.getClaim("accountId"); Long accountId = _rawId != null ? _rawId.longValue() : null;
         settingService.updateSetting(accountId, type, enabled);
         return ResponseEntity.noContent().build();
     }
@@ -42,7 +42,7 @@ public class SettingController {
 
     @GetMapping("/boards")
     public ResponseEntity<List<Long>> getSubscribedBoards(@AuthenticationPrincipal Jwt jwt) {
-        Long accountId = jwt.getClaim("accountId");
+        Number _rawId = jwt.getClaim("accountId"); Long accountId = _rawId != null ? _rawId.longValue() : null;
         return ResponseEntity.ok(settingService.getSubscribedBoards(accountId));
     }
 
@@ -50,7 +50,7 @@ public class SettingController {
     public ResponseEntity<Void> subscribe(
             @PathVariable Long menuId,
             @AuthenticationPrincipal Jwt jwt) {
-        Long accountId = jwt.getClaim("accountId");
+        Number _rawId = jwt.getClaim("accountId"); Long accountId = _rawId != null ? _rawId.longValue() : null;
         settingService.subscribe(accountId, menuId);
         return ResponseEntity.noContent().build();
     }
@@ -59,7 +59,7 @@ public class SettingController {
     public ResponseEntity<Void> unsubscribe(
             @PathVariable Long menuId,
             @AuthenticationPrincipal Jwt jwt) {
-        Long accountId = jwt.getClaim("accountId");
+        Number _rawId = jwt.getClaim("accountId"); Long accountId = _rawId != null ? _rawId.longValue() : null;
         settingService.unsubscribe(accountId, menuId);
         return ResponseEntity.noContent().build();
     }

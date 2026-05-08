@@ -96,6 +96,8 @@ public class NotificationEventListener implements StreamListener<String, MapReco
         NotificationType type = event.getType();
 
         for (Long receiverId : subscribers) {
+            // 자기 자신에게는 알림 보내지 않음
+            if (event.getAuthorId() != null && event.getAuthorId().equals(receiverId)) continue;
             if (!settingService.isEnabled(receiverId, type)) continue;
 
             Notification saved = notificationService.save(
